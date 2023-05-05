@@ -76,6 +76,7 @@ esp_err_t sdcard_mount(const char *base_path, periph_sdcard_mode_t mode)
         ESP_LOGI(TAG, "Using %d-line SD mode,  base path=%s", mode, base_path);
 
         sdmmc_host_t host = SDMMC_HOST_DEFAULT();
+
         // host.max_freq_khz = SDMMC_FREQ_HIGHSPEED;
 
         sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
@@ -84,7 +85,7 @@ esp_err_t sdcard_mount(const char *base_path, periph_sdcard_mode_t mode)
         // Enable internal pullups on enabled pins. The internal pullups
         // are insufficient however, please make sure 10k external pullups are
         // connected on the bus. This is for debug / example purpose only.
-        slot_config.flags |= SDMMC_SLOT_FLAG_INTERNAL_PULLUP;
+        //slot_config.flags |= SDMMC_SLOT_FLAG_INTERNAL_PULLUP;
 
 #if CONFIG_IDF_TARGET_ESP32S3
         slot_config.clk = ESP_SD_PIN_CLK;
@@ -144,7 +145,6 @@ esp_err_t sdcard_mount(const char *base_path, periph_sdcard_mode_t mode)
     }
 
     return ret;
-
 }
 
 esp_err_t sdcard_unmount(void)
@@ -160,7 +160,7 @@ esp_err_t sdcard_unmount(void)
 bool sdcard_is_exist()
 {
     if (g_gpio >= 0) {
-        return (gpio_get_level(g_gpio) == 0x00);
+        return (!gpio_get_level(g_gpio) == 0x00);
     } else {
         return true;
     }

@@ -111,8 +111,6 @@ esp_button_handle_t button_init(button_config_t *config)
     gpio_config_t gpiocfg = {
         .pin_bit_mask = btn->gpio_mask,
         .mode = GPIO_MODE_INPUT,
-        .pull_up_en = GPIO_PULLUP_ENABLE,
-        .pull_down_en = GPIO_PULLDOWN_DISABLE,
         .intr_type = GPIO_INTR_ANYEDGE,
     };
     gpio_config(&gpiocfg);
